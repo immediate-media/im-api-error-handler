@@ -1,0 +1,18 @@
+### phpstorm ###
+.idea/
+
+### Code coverage ###
+build
+
+### PHPCS ###
+.phpcs-cache
+
+### PHP Lint ###
+.phplint-cache
+
+### PHP Unit ###
+.phpunit.result.cache
+
+### Composer ###
+composer.lock
+vendor/

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ruleset name="PHP_CodeSniffer">
+    <!-- Config -->
+    <arg name="basepath" value="."/>
+    <arg name="cache" value=".phpcs-cache"/>
+    <arg name="colors"/>
+    <arg name="extensions" value="php"/>
+
+    <!-- Directories to scan -->
+    <file>src/</file>
+    <file>tests/</file>
+
+    <!-- PSR-12 Extended Coding Style -->
+    <rule ref="PSR12" />
+</ruleset>

@@ -1,0 +1,38 @@
+{
+    "name": "immediate/im-api-error-handler",
+    "description": "Custom error handling and logging for API Platform",
+    "type": "package",
+    "license": "Proprietary",
+    "autoload": {
+        "psr-4": {
+            "IM\\Fabric\\Package\\API\\Error\\Subscriber\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "IM\\Fabric\\Package\\API\\Error\\Subscriber\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "check-coverage": "vendor/bin/phpunit --coverage-html build && open build/index.html",
+        "run-tests": "composer run-phpunit && composer run-phpcs && composer run-phpmd && composer run-phplint",
+        "run-phpcs": "vendor/bin/phpcs",
+        "run-phpmd": "vendor/bin/phpmd src text phpmd-src.xml --exclude src/Migrations/ && vendor/bin/phpmd tests text phpmd-tests.xml",
+        "run-phplint": "vendor/bin/phplint",
+        "run-phpunit": "vendor/bin/phpunit"
+    },
+    "require": {
+        "api-platform/core": "^2.5",
+        "maxbanton/cwh": "^2.0",
+        "monolog/monolog": "^2.0",
+        "symfony/http-kernel": "4.4.2"
+    },
+    "require-dev": {
+        "allure-framework/allure-phpunit": "^1.2",
+        "mockery/mockery": "^1.2",
+        "overtrue/phplint": "^1.1",
+        "phpunit/phpunit": "^8.0",
+        "phpmd/phpmd": "^2.6",
+        "squizlabs/php_codesniffer": "^3.3"
+    }
+}

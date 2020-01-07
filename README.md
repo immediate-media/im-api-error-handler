@@ -2,6 +2,7 @@
 _Custom error handling and logging for API Platform_
 
 ## Setup
+
 ### Composer
 Add the following to composer.json
 
@@ -14,6 +15,7 @@ _composer.json_
     }
 }
 ```
+
 ### Config
 1. By default when first installing the Monolog bundle a default set of config files will be added to the `config/package/<env>` folders. Delete them.
 2. Create a `monolog.yaml` file in `config/packages` and add the following:
@@ -89,8 +91,7 @@ AWS_CLOUDWATCH_STREAM_NAME='local'
 ```
 
 ## Testing Cloudwatch Integration
-1. Ensure that you have a user with the correct privileges in AWS
-    i. See: https://github.com/maxbanton/cwh#aws-iam-needed-permissions
+1. Ensure that you have a user with the correct privileges in AWS (See [here](https://github.com/maxbanton/cwh#aws-iam-needed-permissions) for a list of required permissions)
 2. Generate an AWS access key for the appropriate environment
 3. Copy the key and secret into your `.env.local`
 ```sh
@@ -99,6 +100,5 @@ AWS_SECRET_KEY=<USER-SECRET>
 ```
 4. Set the application to prod mode
 5. Trigger some sort of error
-6. Go to AWS Cloudwatch and open the `application-logs` group
-    i. See [here](https://eu-west-1.console.aws.amazon.com/cloudwatch/home?region=eu-west-1#logStream:group=application-logs) for EU-West-1
+6. Go to AWS Cloudwatch and open the `application-logs` group (See [here](https://eu-west-1.console.aws.amazon.com/cloudwatch/home?region=eu-west-1#logStream:group=application-logs) for EU-West-1)
 7. The log stream will be along the lines of `<application-name>-local`

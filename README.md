@@ -4,17 +4,17 @@ _Custom error handling and logging for API Platform_
 ## Setup
 
 ### Composer
-Add the following to composer.json
-
-_composer.json_
+1. Add the following to composer.json
 ```json
 {
-    "require": {
-        "immediate/im-api-error-handler": "^<CURRENT MAJOR VERSION>",
-        "symfony/monolog-bundle": "^3.5"
+    "repositories": [
+    {
+        "type": "vcs",
+        "url": "https://github.immediate.co.uk/WCP-Packages/im-api-error-handler.git"
     }
 }
 ```
+2. Run `$ composer require immediate/im-api-error-handler symfony/monolog-bundle`
 
 ### Config
 1. By default when first installing the Monolog bundle a default set of config files will be added to the `config/package/<env>` folders. Delete them.
@@ -29,7 +29,7 @@ monolog:
 
         filter_for_errors:
             type: fingers_crossed
-            # if *one* log is error or higher, pass *all* to file_log
+            # if *one* log is error or higher, pass *all* to app_error
             action_level: error
             handler: app_error
             channels: ['app']

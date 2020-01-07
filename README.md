@@ -1,9 +1,9 @@
 # IM API Error Handler
 _Custom error handling and logging for API Platform_
 
-## Setup
+## Setup
 
-### Composer
+### Composer
 Add the following to composer.json
 
 _composer.json_
@@ -16,7 +16,7 @@ _composer.json_
 }
 ```
 
-### Config
+### Config
 1. By default when first installing the Monolog bundle a default set of config files will be added to the `config/package/<env>` folders. Delete them.
 2. Create a `monolog.yaml` file in `config/packages` and add the following:
 ```yaml

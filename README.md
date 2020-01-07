@@ -8,10 +8,11 @@ _Custom error handling and logging for API Platform_
 ```json
 {
     "repositories": [
-    {
-        "type": "vcs",
-        "url": "https://github.immediate.co.uk/WCP-Packages/im-api-error-handler.git"
-    }
+        {
+            "type": "vcs",
+            "url": "https://github.immediate.co.uk/WCP-Packages/im-api-error-handler.git"
+        }
+    ]
 }
 ```
 2. Run `$ composer require immediate/im-api-error-handler symfony/monolog-bundle`

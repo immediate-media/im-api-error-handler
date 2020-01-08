@@ -90,6 +90,10 @@ services:
 # AWS
 AWS_REGION='eu-west-1'
 AWS_CLOUDWATCH_STREAM_NAME='local'
+
+# Secrets - Defined as empty to avoid unset errors with missing .env.local
+AWS_ACCESS_KEY=''
+AWS_SECRET_KEY=''
 ```
 
 ## Testing Cloudwatch Integration

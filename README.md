@@ -53,6 +53,7 @@ monolog:
 monolog:
     handlers:
         cloudwatch:
+            channels: ['app', 'php']
             type: service
             id: cloudwatch_handler
 ```

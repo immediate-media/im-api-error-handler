@@ -11,7 +11,7 @@ class ErrorDisplayHandler extends AbstractExceptionSubscriber
 {
     public static function getSubscribedEvents(): array
     {
-        return [KernelEvents::EXCEPTION => ['displayException', 0]];
+        return [KernelEvents::EXCEPTION => ['displayException', -10]];
     }
 
     public function displayException(ExceptionEvent $event): void

@@ -24,7 +24,7 @@ class LoggingHandler extends AbstractExceptionSubscriber
 
     public static function getSubscribedEvents(): array
     {
-        return [KernelEvents::EXCEPTION => ['logException', 10]];
+        return [KernelEvents::EXCEPTION => ['logException', 0]];
     }
 
     public function logException(ExceptionEvent $event): void

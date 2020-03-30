@@ -35,7 +35,7 @@ class LoggingHandlerTest extends TestCase
 
     public function testGetSubscribedEventsReturnsCallbackNameForExceptionEvent(): void
     {
-        $expected = [KernelEvents::EXCEPTION => ['logException', 10]];
+        $expected = [KernelEvents::EXCEPTION => ['logException', 0]];
 
         $this->assertSame($expected, LoggingHandler::getSubscribedEvents());
     }

@@ -22,7 +22,7 @@ class ErrorDisplayHandlerTest extends TestCase
 
     public function testGetSubscribedEventsReturnsCallbackNameForExceptionEvent(): void
     {
-        $expected = [KernelEvents::EXCEPTION => ['displayException', 0]];
+        $expected = [KernelEvents::EXCEPTION => ['displayException', -10]];
 
         $this->assertSame($expected, ErrorDisplayHandler::getSubscribedEvents());
     }

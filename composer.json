@@ -23,7 +23,7 @@
     },
     "require": {
         "api-platform/core": "^2.5",
-        "monolog/monolog": "^2.0",
+        "psr/log": "^1.1",
         "symfony/http-kernel": "^4.4"
     },
     "require-dev": {

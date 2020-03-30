@@ -23,7 +23,6 @@
     },
     "require": {
         "api-platform/core": "^2.5",
-        "maxbanton/cwh": "^2.0",
         "monolog/monolog": "^2.0",
         "symfony/http-kernel": "^4.4"
     },

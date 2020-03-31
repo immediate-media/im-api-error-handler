@@ -33,31 +33,20 @@ monolog:
             # if *one* log is error or higher, pass *all* to app_error
             action_level: error
             handler: app_error
-            channels: ['app']
+            channels: ['app', 'php']
 
         # now passed *all* logs, but only if one log is error or higher
         app_error:
             level: debug
             type: stream
-            path: "%kernel.logs_dir%/%kernel.environment%.error.log"
+            path: 'php://stdout'
+```
 
-        deprecations:
-            channels: ["php"]
-            level: info
-            max_level: info
-            path: "%kernel.logs_dir%/%kernel.environment%.deprecations.log"
-            type: stream
-```
-3. Create a `monolog.yaml` file in `config/packages/prod` and add the following:
-```yaml
-monolog:
-    handlers:
-        cloudwatch:
-            channels: ['app', 'php']
-            type: service
-            id: cloudwatch_handler
-```
-4. Add the following to `config/services.yaml`:
+What this means:
+- Logs are only returned if there is at least one log of a level >= to "error"
+- Logs are sent to the standard output of the container. Locally, you can see them by running `docker-compose logs app`.
+
+3. Add the following to `config/services.yaml`:
 ```yaml
 services:
     # IM API Error Handler
@@ -68,43 +57,4 @@ services:
         arguments: ['@logger', '%kernel.environment%', '%api_platform.exception_to_status%']
         tags:
             - { name: monolog.logger, channel: app }
-
-    # AWS CloudWatch Logs Handler
-    cloudwatch_client:
-        class: Aws\CloudWatchLogs\CloudWatchLogsClient
-        arguments:
-            - credentials: { key: '%env(string:AWS_ACCESS_KEY)%', secret: '%env(string:AWS_SECRET_KEY)%' }
-              region: '%env(string:AWS_REGION)%'
-              version: '2014-03-28'
-
-    cloudwatch_handler:
-        class: Maxbanton\Cwh\Handler\CloudWatch
-        arguments:
-            - '@cloudwatch_client'
-            - 'application-logs'
-            - '%env(SERVICE_NAME)%-%env(AWS_CLOUDWATCH_STREAM_NAME)%'
-            - ~ # Infinite retention (null)
 ```
-5. Add the following variables to your `.env` file:
-```sh
-# AWS
-AWS_REGION='eu-west-1'
-AWS_CLOUDWATCH_STREAM_NAME='local'
-
-# Secrets - Defined as empty to avoid unset errors with missing .env.local
-AWS_ACCESS_KEY=''
-AWS_SECRET_KEY=''
-```
-
-## Testing Cloudwatch Integration
-1. Ensure that you have a user with the correct privileges in AWS (See [here](https://github.com/maxbanton/cwh#aws-iam-needed-permissions) for a list of required permissions)
-2. Generate an AWS access key for the appropriate environment
-3. Copy the key and secret into your `.env.local`
-```sh
-AWS_ACCESS_KEY=<USER-TOKEN>
-AWS_SECRET_KEY=<USER-SECRET>
-```
-4. Set the application to prod mode
-5. Trigger some sort of error
-6. Go to AWS Cloudwatch and open the `application-logs` group (See [here](https://eu-west-1.console.aws.amazon.com/cloudwatch/home?region=eu-west-1#logStream:group=application-logs) for EU-West-1)
-7. The log stream will be along the lines of `<application-name>-local`

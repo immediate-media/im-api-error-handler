@@ -3,6 +3,11 @@ _Custom error handling and logging for API Platform_
 
 ## Setup
 
+While this package can technically be used with any implementations of the [PSR-3 Logger Interface](https://www.php-fig.org/psr/psr-3/),
+we _highly_ recommend using it alongside Symfony's Monolog Bundle.
+
+To use this package with Monolog, follow these steps:
+
 ### Composer
 1. Add the following to composer.json
 ```json

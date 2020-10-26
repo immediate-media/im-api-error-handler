@@ -39,10 +39,12 @@ abstract class AbstractExceptionSubscriber implements EventSubscriberInterface
 
     protected function toArray(Throwable $throwable, int $statusCode, string $appEnv = null): array
     {
+        $response = new Response();
+
         $data = [
             'message' => $throwable->getMessage(),
             'status' => $statusCode,
-            'title' => (new Response())->statusTexts[$statusCode] ?? 'Unknown status code',
+            'title' => $response::$statusTexts[$statusCode] ?? 'Unknown status code',
         ];
 
         $appEnv = $appEnv ?? $this->appEnv;

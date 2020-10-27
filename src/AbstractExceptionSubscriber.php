@@ -37,6 +37,9 @@ abstract class AbstractExceptionSubscriber implements EventSubscriberInterface
             : Response::HTTP_INTERNAL_SERVER_ERROR;
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.UndefinedVariable)
+     */
     protected function toArray(Throwable $throwable, int $statusCode, string $appEnv = null): array
     {
         $response = new Response();

@@ -24,7 +24,7 @@
     "require": {
         "api-platform/core": "^2.5",
         "psr/log": "^1.1",
-        "symfony/http-kernel": "^4.4"
+        "symfony/http-kernel": "^4.4|^5.4"
     },
     "require-dev": {
         "allure-framework/allure-phpunit": "^1.2",

@@ -1,30 +1,30 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IM\Fabric\Package\API\Error\Subscriber\Tests;
 
-use ApiPlatform\Core\Exception\RuntimeException as ApiPlatformRuntimeException;
-use IM\Fabric\Package\API\Error\Subscriber\LoggingHandler;
+use ApiPlatform\Exception\RuntimeException as ApiPlatformRuntimeException;
 use Exception;
+use IM\Fabric\Package\API\Error\Subscriber\LoggingHandler;
 use Mockery;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
-use Mockery\MockInterface;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Throwable;
 
 class LoggingHandlerTest extends TestCase
 {
     use MockeryPHPUnitIntegration;
+    use MocksExceptionEvents;
 
-    /** @var LoggerInterface */
-    private $logger;
+    private LoggerInterface $logger;
 
-    /** @var LoggingHandler */
-    private $loggingHandler;
+    private LoggingHandler $loggingHandler;
 
     public function setUp(): void
     {
@@ -42,7 +42,8 @@ class LoggingHandlerTest extends TestCase
 
     public function testLogExceptionIgnoresApiPlatformExceptions(): void
     {
-        $event = $this->buildMockEvent(Mockery::mock(ApiPlatformRuntimeException::class));
+        $event = Mockery::namedMock(ExceptionEvent::class, RequestEvent::class);
+        $event->expects('getThrowable')->andReturns(Mockery::mock(ApiPlatformRuntimeException::class));
 
         $this->logger->shouldNotReceive('log');
 
@@ -71,17 +72,5 @@ class LoggingHandlerTest extends TestCase
             ->with(LogLevel::ERROR, 'Error 400: Mock bad request error', Mockery::hasKey('trace'));
 
         $this->loggingHandler->logException($event);
-    }
-
-    /**
-     * @param Throwable $throwable
-     * @return ExceptionEvent|MockInterface
-     */
-    private function buildMockEvent(Throwable $throwable): ExceptionEvent
-    {
-        $event = Mockery::mock(ExceptionEvent::class);
-        $event->shouldReceive('getThrowable')->andReturn($throwable);
-
-        return $event;
     }
 }

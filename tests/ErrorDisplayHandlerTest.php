@@ -2,23 +2,24 @@
 
 namespace IM\Fabric\Package\API\Error\Subscriber\Tests;
 
-use ApiPlatform\Core\Exception\RuntimeException as ApiPlatformRuntimeException;
-use IM\Fabric\Package\API\Error\Subscriber\ErrorDisplayHandler;
+use ApiPlatform\Exception\RuntimeException as ApiPlatformRuntimeException;
 use Exception;
+use IM\Fabric\Package\API\Error\Subscriber\ErrorDisplayHandler;
 use InvalidArgumentException;
 use Mockery;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
-use Mockery\MockInterface;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Throwable;
 
 class ErrorDisplayHandlerTest extends TestCase
 {
     use MockeryPHPUnitIntegration;
+    use MocksExceptionEvents;
 
     public function testGetSubscribedEventsReturnsCallbackNameForExceptionEvent(): void
     {
@@ -31,7 +32,8 @@ class ErrorDisplayHandlerTest extends TestCase
     {
         $subscriber = new ErrorDisplayHandler('dev', []);
 
-        $event = $this->buildMockEvent(Mockery::mock(ApiPlatformRuntimeException::class));
+        $event = Mockery::namedMock(ExceptionEvent::class, RequestEvent::class);
+        $event->expects('getThrowable')->andReturns(Mockery::mock(ApiPlatformRuntimeException::class));
 
         $event->shouldNotReceive('setResponse');
 
@@ -40,63 +42,94 @@ class ErrorDisplayHandlerTest extends TestCase
 
     public function testDisplayExceptionSetStatusCodeBasedOnExceptionToStatusConfig(): void
     {
-        $subscriber = new ErrorDisplayHandler('dev', [InvalidArgumentException::class => 400]);
-        $event = $this->buildMockEvent(new InvalidArgumentException('bad request'));
+        $exception = new InvalidArgumentException('bad request');
+        $statusCode = 400;
+        $subscriber = new ErrorDisplayHandler('dev', [get_class($exception) => $statusCode]);
+        $event = $this->buildMockEvent($exception);
+
+        $event->expects('setResponse')->with(
+            Mockery::on(
+                function ($response) use ($exception, $statusCode) {
+                    return
+                        $response instanceof JsonResponse &&
+                        $response->headers->get('Content-Type') === 'application/problem+json' &&
+                        $response->getStatusCode() === $statusCode;
+                }
+            )
+        );
 
         $subscriber->displayException($event);
-
-        $this->assertSame(400, $event->getResponse()->getStatusCode());
     }
 
     public function testDisplayExceptionSetResponseForHttpExceptionWithTraceOnDev(): void
     {
+        $exception = new NotFoundHttpException('not found');
         $subscriber = new ErrorDisplayHandler('dev', []);
-        $event = $this->buildMockEvent(new NotFoundHttpException('not found'));
+        $event = $this->buildMockEvent($exception);
+
+        $event->expects('setResponse')->with(
+            Mockery::on(
+                function ($response) use ($exception) {
+                    $content = json_decode($response->getContent(), true);
+                    return
+                        $response instanceof JsonResponse &&
+                        $response->headers->get('Content-Type') === 'application/problem+json' &&
+                        $response->getStatusCode() === Response::HTTP_NOT_FOUND &&
+                        $content['message'] === $exception->getMessage() &&
+                        $content['status'] === Response::HTTP_NOT_FOUND &&
+                        array_key_exists('trace', $content);
+                }
+            )
+        );
 
         $subscriber->displayException($event);
-
-        $response = $event->getResponse();
-        $body = json_decode($event->getResponse()->getContent(), true);
-
-        $this->assertInstanceOf(JsonResponse::class, $event->getResponse());
-        $this->assertSame(404, $response->getStatusCode());
-        $this->assertSame('not found', $body['message']);
-        $this->assertSame(404, $body['status']);
-        $this->assertArrayHasKey('trace', $body);
     }
 
     public function testDisplayExceptionSetResponseWithoutTraceOnProd(): void
     {
         $subscriber = new ErrorDisplayHandler('prod', []);
-        $event = $this->buildMockEvent(new NotFoundHttpException('not found'));
+        $exception = new NotFoundHttpException('not found');
+        $event = $this->buildMockEvent($exception);
+
+        $event->expects('setResponse')->with(
+            Mockery::on(
+                function ($response) use ($exception) {
+                    $content = json_decode($response->getContent(), true);
+                    return
+                        $response instanceof JsonResponse &&
+                        $response->headers->get('Content-Type') === 'application/problem+json' &&
+                        $response->getStatusCode() === Response::HTTP_NOT_FOUND &&
+                        $content['message'] === $exception->getMessage() &&
+                        $content['status'] === Response::HTTP_NOT_FOUND &&
+                        !array_key_exists('trace', $content);
+                }
+            )
+        );
 
         $subscriber->displayException($event);
-
-        $body = json_decode($event->getResponse()->getContent(), true);
-
-        $this->assertSame(404, $event->getResponse()->getStatusCode());
-        $this->assertArrayNotHasKey('trace', $body);
     }
 
-    public function testDisplayExceptionSet500ForUnknownException(): void
+    public function testDisplayExceptionSetInternalServerErrorForUnknownException(): void
     {
         $subscriber = new ErrorDisplayHandler('dev', []);
-        $event = $this->buildMockEvent(new Exception('unknown error'));
+        $exception = new Exception('unknown error');
+        $event = $this->buildMockEvent($exception);
+
+        $event->expects('setResponse')->with(
+            Mockery::on(
+                function ($response) use ($exception) {
+                    $content = json_decode($response->getContent(), true);
+                    return
+                        $response instanceof JsonResponse &&
+                        $response->headers->get('Content-Type') === 'application/problem+json' &&
+                        $response->getStatusCode() === Response::HTTP_INTERNAL_SERVER_ERROR &&
+                        $content['message'] === $exception->getMessage() &&
+                        $content['status'] === Response::HTTP_INTERNAL_SERVER_ERROR &&
+                        array_key_exists('trace', $content);
+                }
+            )
+        );
 
         $subscriber->displayException($event);
-
-        $this->assertSame(500, $event->getResponse()->getStatusCode());
-    }
-
-    /**
-     * @param Throwable $throwable
-     * @return ExceptionEvent|MockInterface
-     */
-    private function buildMockEvent(Throwable $throwable): ExceptionEvent
-    {
-        $event = Mockery::mock(ExceptionEvent::class)->makePartial();
-        $event->shouldReceive('getThrowable')->andReturn($throwable);
-
-        return $event;
     }
 }

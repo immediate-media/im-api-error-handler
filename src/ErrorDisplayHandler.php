@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IM\Fabric\Package\API\Error\Subscriber;
 
-use ApiPlatform\Core\Exception\ExceptionInterface as ApiPlatformException;
+use ApiPlatform\Exception\ExceptionInterface as ApiPlatformException;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\HttpFoundation\JsonResponse;

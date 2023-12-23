@@ -9,6 +9,7 @@ build
 
 ### PHP Lint ###
 .phplint-cache
+.phplint.cache
 
 ### PHP Unit ###
 .phpunit.result.cache

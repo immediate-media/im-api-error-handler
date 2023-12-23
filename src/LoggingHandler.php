@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IM\Fabric\Package\API\Error\Subscriber;
 
-use ApiPlatform\Core\Exception\ExceptionInterface as ApiPlatformException;
-use Exception;
+use ApiPlatform\Exception\ExceptionInterface as ApiPlatformException;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,14 +13,12 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 class LoggingHandler extends AbstractExceptionSubscriber
 {
-    /** @var LoggerInterface */
-    private $logger;
-
-    public function __construct(LoggerInterface $logger, string $appEnv, array $exceptionToStatus)
-    {
+    public function __construct(
+        private readonly LoggerInterface $logger,
+        protected string $appEnv,
+        protected array $exceptionToStatus
+    ) {
         parent::__construct($appEnv, $exceptionToStatus);
-
-        $this->logger = $logger;
     }
 
     public static function getSubscribedEvents(): array

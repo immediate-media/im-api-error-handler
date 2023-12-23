@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IM\Fabric\Package\API\Error\Subscriber;
 
-use Exception;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
@@ -12,16 +13,10 @@ abstract class AbstractExceptionSubscriber implements EventSubscriberInterface
 {
     protected const TRACE_TEMPLATE_STRING = 'Line <line>: \<class>::<function>';
 
-    /** @var string */
-    protected $appEnv;
-
-    /** @var array */
-    protected $exceptionToStatus;
-
-    public function __construct(string $appEnv, array $exceptionToStatus)
-    {
-        $this->appEnv = $appEnv;
-        $this->exceptionToStatus = $exceptionToStatus;
+    public function __construct(
+        private readonly string $appEnv,
+        private readonly array $exceptionToStatus
+    ) {
     }
 
     protected function getStatusCode(Throwable $throwable): int
@@ -66,9 +61,9 @@ abstract class AbstractExceptionSubscriber implements EventSubscriberInterface
         $trace = [];
         foreach ($stackTrace as $traceElement) {
             $line = self::TRACE_TEMPLATE_STRING;
-
             foreach ($matches as $lookup) {
-                $line = str_replace("<$lookup>", $traceElement[$lookup] ?? '<PHP>', $line);
+                $element = $traceElement[$lookup] ?? '<PHP>';
+                $line = str_replace("<$lookup>", (string)$element, $line);
             }
 
             $trace[] = $line;
@@ -81,7 +76,7 @@ abstract class AbstractExceptionSubscriber implements EventSubscriberInterface
     {
         $matches = [];
 
-        preg_match_all('/(?<=<)([\w]+)(?=>)/', self::TRACE_TEMPLATE_STRING, $matches);
+        preg_match_all('/(?<=<)(\w+)(?=>)/', self::TRACE_TEMPLATE_STRING, $matches);
 
         return reset($matches);
     }

@@ -1,10 +1,10 @@
 <?php
 
-namespace IM\Fabric\Package\API\Error\Subscriber\Tests;
+namespace IM\Fabric\Bundle\API\Error\Subscriber\Tests;
 
 use ApiPlatform\Exception\RuntimeException as ApiPlatformRuntimeException;
 use Exception;
-use IM\Fabric\Package\API\Error\Subscriber\ErrorDisplayHandler;
+use IM\Fabric\Bundle\API\Error\Subscriber\ErrorDisplayHandler;
 use InvalidArgumentException;
 use Mockery;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;

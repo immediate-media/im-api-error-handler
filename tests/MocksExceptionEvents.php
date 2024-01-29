@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace IM\Fabric\Package\API\Error\Subscriber\Tests;
+namespace IM\Fabric\Bundle\API\Error\Subscriber\Tests;
 
 use Mockery;
 use Mockery\MockInterface;

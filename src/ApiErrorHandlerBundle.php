@@ -1,8 +1,11 @@
 <?php
 
-namespace IM\Fabric\Package\API\Error\Subscriber;
+declare(strict_types=1);
 
-class ApiErrorHandlerBundle
+namespace IM\Fabric\Bundle\API\Error\Subscriber;
+
+use Symfony\Component\HttpKernel\Bundle\Bundle;
+
+class ApiErrorHandlerBundle extends Bundle
 {
-
 }

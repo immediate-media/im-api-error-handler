@@ -55,10 +55,10 @@ What this means:
 ```yaml
 services:
     # IM API Error Handler
-    IM\Fabric\Package\API\Error\Subscriber\ErrorDisplayHandler:
+    IM\Fabric\Bundle\API\Error\Subscriber\ErrorDisplayHandler:
         arguments: ['%kernel.environment%', '%api_platform.exception_to_status%']
 
-    IM\Fabric\Package\API\Error\Subscriber\LoggingHandler:
+    IM\Fabric\Bundle\API\Error\Subscriber\LoggingHandler:
         arguments: ['@logger', '%kernel.environment%', '%api_platform.exception_to_status%']
         tags:
             - { name: monolog.logger, channel: app }

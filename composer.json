@@ -10,9 +10,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "IM\\Fabric\\Package\\API\\Error\\Subscriber\\Tests\\": "tests/"
-        }
-    },
+            "IM\\Fabric\\Bundle\\API\\Error\\Subscriber\\Tests\\": "tests/"
+        }},
     "scripts": {
         "check-coverage": "vendor/bin/phpunit --coverage-html build && open build/index.html",
         "run-tests": "composer run-phpunit && composer run-phpcs && composer run-phpmd && composer run-phplint",
@@ -25,8 +24,7 @@
         "php": "^8.1",
         "api-platform/core": "^3.2",
         "symfony/http-kernel": "^6.4",
-        "psr/log": "^3",
-        "symfony/monolog-bundle": "^3.10"
+        "psr/log": "^3"
     },
     "require-dev": {
         "allure-framework/allure-phpunit": "^1.2",

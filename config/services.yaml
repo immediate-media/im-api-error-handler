@@ -1,0 +1,8 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  IM\Fabric\Bundle\API\Error\Subscriber\AbstractExceptionSubscriber: ~
+  IM\Fabric\Bundle\API\Error\Subscriber\ErrorDisplayHandler: ~
+  IM\Fabric\Bundle\API\Error\Subscriber\LoggingHandler: ~

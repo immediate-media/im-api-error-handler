@@ -4,8 +4,7 @@ services:
     autoconfigure: true
 
   # IM API Error Handler
-#  IM\Fabric\Bundle\API\Error\Subscriber\ErrorDisplayHandler:
-#    arguments: [ '%kernel.environment%', '%api_platform.exception_to_status%' ]
+  IM\Fabric\Bundle\API\Error\Subscriber\ErrorDisplayHandler:
+#   arguments: [ '%kernel.environment%', '%api_platform.exception_to_status%' ]
 
-  #ßIM\Fabric\Bundle\API\Error\Subscriber\AbstractExceptionSubscriber: ~
-#  IM\Fabric\Bundle\API\Error\Subscriber\LoggingHandler: ~
+  IM\Fabric\Bundle\API\Error\Subscriber\LoggingHandler: ~

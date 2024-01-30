@@ -54,10 +54,6 @@ What this means:
 3. Add the following to `config/services.yaml`:
 ```yaml
 services:
-    # IM API Error Handler
-    IM\Fabric\Bundle\API\Error\Subscriber\ErrorDisplayHandler:
-        arguments: ['%kernel.environment%', '%api_platform.exception_to_status%']
-
     IM\Fabric\Bundle\API\Error\Subscriber\LoggingHandler:
         arguments: ['@logger', '%kernel.environment%', '%api_platform.exception_to_status%']
         tags:

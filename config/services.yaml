@@ -8,4 +8,4 @@ services:
     arguments: [ '%kernel.environment%', '%api_platform.exception_to_status%' ]
 
   IM\Fabric\Bundle\API\Error\Subscriber\AbstractExceptionSubscriber: ~
-  IM\Fabric\Bundle\API\Error\Subscriber\LoggingHandler: ~
+  IM\Fabric\Bundle\API\Error\Subscriber\LoggingHandlerq: ~

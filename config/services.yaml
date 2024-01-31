@@ -5,6 +5,6 @@ services:
 
   # IM API Error Handler
   IM\Fabric\Bundle\API\Error\Subscriber\ErrorDisplayHandler:
-#   arguments: [ '%kernel.environment%', '%api_platform.exception_to_status%' ]
+   arguments: [ '%kernel.environment%', '%api_platform.exception_to_status%' ]
 
   IM\Fabric\Bundle\API\Error\Subscriber\LoggingHandler: ~

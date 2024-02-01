@@ -24,7 +24,8 @@
         "php": "^8.1",
         "api-platform/core": "^3.2",
         "symfony/http-kernel": "^6.4",
-        "psr/log": "^3"
+        "psr/log": "^3",
+        "symfony/monolog-bundle": "^3.10"
     },
     "require-dev": {
         "mockery/mockery": "^1.2",

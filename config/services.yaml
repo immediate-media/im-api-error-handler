@@ -7,4 +7,7 @@ services:
   IM\Fabric\Bundle\ApiErrorHandlerBundle\EventSubscriber\ErrorDisplayHandler:
    arguments: [ '%kernel.environment%', '%api_platform.exception_to_status%' ]
 
-  IM\Fabric\Bundle\ApiErrorHandlerBundle\EventSubscriber\LoggingHandler: ~
+  IM\Fabric\Bundle\ApiErrorHandlerBundle\EventSubscriber\LoggingHandler:
+    arguments: [ '@logger', '%kernel.environment%', '%api_platform.exception_to_status%' ]
+    tags:
+      - { name: monolog.logger, channel: app }

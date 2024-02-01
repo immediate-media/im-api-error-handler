@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace IM\Fabric\Bundle\API\Error\Subscriber\Tests;
+namespace IM\Fabric\Bundle\ApiErrorHandlerBundle\Tests;
 
-use IM\Fabric\Bundle\API\Error\Subscriber\DependencyInjection\ApiErrorHandlerExtension;
+use IM\Fabric\Bundle\ApiErrorHandlerBundle\ApiErrorHandlerBundle;
+use IM\Fabric\Bundle\ApiErrorHandlerBundle\DependencyInjection\ApiErrorHandlerExtension;
 use PHPUnit\Framework\TestCase;
-use IM\Fabric\Bundle\API\Error\Subscriber\ApiErrorHandlerBundle;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class ApiErrorHandlerBundleTest extends TestCase

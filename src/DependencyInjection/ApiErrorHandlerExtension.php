@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace IM\Fabric\Bundle\API\Error\Subscriber\DependencyInjection;
+namespace IM\Fabric\Bundle\ApiErrorHandlerBundle\DependencyInjection;
 
 use Exception;
 use Symfony\Component\Config\FileLocator;

@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace IM\Fabric\Bundle\API\Error\Subscriber;
+namespace IM\Fabric\Bundle\ApiErrorHandlerBundle\EventSubscriber;
 
 use ApiPlatform\Exception\ExceptionInterface as ApiPlatformException;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\HttpFoundation\JsonResponse;
 
 class ErrorDisplayHandler extends AbstractExceptionSubscriber
 {

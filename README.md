@@ -64,7 +64,7 @@ services:
 
 4. Remove existing package before installing this bundle. 
 
-```json
+```yaml
     composer remove immediate/im-api-error-handler
 ```
 
@@ -87,13 +87,13 @@ services:
 
 7. Install im-api-handler bundle
 
-```json
+```yaml
     composer config repositories.repo-name vcs https://github.immediate.co.uk/WCP-Packages/im-api-error-handler.git
     composer require immediate/im-api-error-handler
 ```
 8. Check the API's 'config/bundles.php' for the content below
 
-```php
+```yaml
 
     IM\Fabric\Bundle\API\Error\Subscriber\ApiErrorHandlerBundle::class => ['all' => true],
 

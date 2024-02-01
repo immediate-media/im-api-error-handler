@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace IM\Fabric\Bundle\API\Error\Subscriber;
+namespace IM\Fabric\Bundle\ApiErrorHandlerBundle\EventSubscriber;
 
 use ApiPlatform\Exception\ExceptionInterface as ApiPlatformException;
 use Psr\Log\LoggerInterface;

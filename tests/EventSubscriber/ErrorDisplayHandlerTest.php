@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IM\Fabric\Bundle\ApiErrorHandlerBundle\Tests\EventSubscriber;
 
 use ApiPlatform\Exception\RuntimeException as ApiPlatformRuntimeException;

@@ -8,22 +8,31 @@
     composer remove immediate/im-api-error-handler
 ```
 
-5. Check the API's 'config/services.yaml' for the content below
+5. Check the API's 'config/services.yaml' for the two configurations below
 
 ```yaml
-   # IM API Error Handler
-   IM\Fabric\Bundle\API\Error\Subscriber\ErrorDisplayHandler:
-   arguments: [ '%kernel.environment%', '%api_platform.exception_to_status%' ]
-
-   IM\Fabric\Bundle\API\Error\Subscriber\LoggingHandler:
-   arguments: [ '@logger', '%kernel.environment%', '%api_platform.exception_to_status%' ]
-   tags:
-   - { name: monolog.logger, channel: app }
+       # IM API Error Handler
+       IM\Fabric\Package\API\Error\Subscriber\ErrorDisplayHandler:
+          arguments: [ '%kernel.environment%', '%api_platform.exception_to_status%' ]
 ```
-6. Remove previous configuration
-    - Remove the first block referring to the 'ErrorDisplayHandler'
-    - If you require 'monolog' then leave the second block but if not you can remove that also
 
+```yaml
+       IM\Fabric\B\API\Error\Subscriber\LoggingHandler:
+          arguments: [ '@logger', '%kernel.environment%', '%api_platform.exception_to_status%' ]
+          tags:
+             - { name: monolog.logger, channel: app }
+```
+6. Change configuration
+    - Remove the first block referring to the 'ErrorDisplayHandler'
+
+    - The 'monolog' configuration needs to be changed as below
+
+```yaml
+       IM\Fabric\Bundle\ApiErrorHandlerBundle\EventSubscriber\LoggingHandler:
+          arguments: [ '@logger', '%kernel.environment%', '%api_platform.exception_to_status%' ]
+          tags:
+             - { name: monolog.logger, channel: app }
+```
 
 7. Install im-api-handler bundle
 

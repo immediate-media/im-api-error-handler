@@ -12,7 +12,7 @@ use Throwable;
 
 trait MocksExceptionEvents
 {
-    private function buildMockEvent(Throwable $throwable): ExceptionEvent|MockInterface
+    public function buildMockEvent(Throwable $throwable): ExceptionEvent|MockInterface
     {
         $event = Mockery::namedMock(ExceptionEvent::class, RequestEvent::class);
         $event->expects('getThrowable')->andReturns($throwable);

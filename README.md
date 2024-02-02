@@ -54,7 +54,7 @@ What this means:
 3. Add the following to `config/services.yaml`:
 ```yaml
 services:
-    IM\Fabric\Bundle\API\Error\Subscriber\LoggingHandler:
+  IM\Fabric\Bundle\ApiErrorHandlerBundle\EventSubscriber\LoggingHandler:
         arguments: ['@logger', '%kernel.environment%', '%api_platform.exception_to_status%']
         tags:
             - { name: monolog.logger, channel: app }

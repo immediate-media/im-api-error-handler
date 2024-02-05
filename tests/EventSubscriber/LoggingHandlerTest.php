@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace IM\Fabric\Package\API\Error\Subscriber\Tests;
+namespace IM\Fabric\Bundle\ApiErrorHandlerBundle\Tests\EventSubscriber;
 
 use ApiPlatform\Exception\RuntimeException as ApiPlatformRuntimeException;
 use Exception;
-use IM\Fabric\Package\API\Error\Subscriber\LoggingHandler;
+use IM\Fabric\Bundle\ApiErrorHandlerBundle\EventSubscriber\LoggingHandler;
 use Mockery;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use PHPUnit\Framework\TestCase;

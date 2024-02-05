@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace IM\Fabric\Package\API\Error\Subscriber\Tests;
+namespace IM\Fabric\Bundle\ApiErrorHandlerBundle\Tests\EventSubscriber;
 
 use Mockery;
 use Mockery\MockInterface;
@@ -12,7 +12,7 @@ use Throwable;
 
 trait MocksExceptionEvents
 {
-    private function buildMockEvent(Throwable $throwable): ExceptionEvent|MockInterface
+    public function buildMockEvent(Throwable $throwable): ExceptionEvent|MockInterface
     {
         $event = Mockery::namedMock(ExceptionEvent::class, RequestEvent::class);
         $event->expects('getThrowable')->andReturns($throwable);

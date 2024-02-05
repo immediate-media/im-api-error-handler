@@ -3,7 +3,7 @@ _Custom error handling and logging for API Platform_
 
 ## Setup
 
-While this package can technically be used with any implementations of the [PSR-3 Logger Interface](https://www.php-fig.org/psr/psr-3/),
+While this bundle can technically be used with any implementations of the [PSR-3 Logger Interface](https://www.php-fig.org/psr/psr-3/),
 we _highly_ recommend using it alongside Symfony's Monolog Bundle.
 
 To use this package with Monolog, follow these steps:
@@ -54,12 +54,9 @@ What this means:
 3. Add the following to `config/services.yaml`:
 ```yaml
 services:
-    # IM API Error Handler
-    IM\Fabric\Package\API\Error\Subscriber\ErrorDisplayHandler:
-        arguments: ['%kernel.environment%', '%api_platform.exception_to_status%']
-
-    IM\Fabric\Package\API\Error\Subscriber\LoggingHandler:
+  IM\Fabric\Bundle\ApiErrorHandlerBundle\EventSubscriber\LoggingHandler:
         arguments: ['@logger', '%kernel.environment%', '%api_platform.exception_to_status%']
         tags:
             - { name: monolog.logger, channel: app }
 ```
+

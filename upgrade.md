@@ -2,13 +2,13 @@
 
 ## Setup
 
-4. Remove existing package before installing this bundle.
+1. Remove existing package before installing this bundle.
 
 ```yaml
     composer remove immediate/im-api-error-handler
 ```
 
-5. Check the API's 'config/services.yaml' for the two configurations below
+2. Check the API's 'config/services.yaml' for the two configurations below and, if present, remove them.
 
 ```yaml
        # IM API Error Handler
@@ -22,32 +22,20 @@
           tags:
              - { name: monolog.logger, channel: app }
 ```
-6. Change configuration
-    - Remove the first block referring to the 'ErrorDisplayHandler'
 
-    - The 'monolog' configuration needs to be changed as below
+You can edit what channels logs go to by redeclaring the DI for the logging handler in your services.yaml
 
-```yaml
-       IM\Fabric\Bundle\ApiErrorHandlerBundle\EventSubscriber\LoggingHandler:
-          arguments: [ '@logger', '%kernel.environment%', '%api_platform.exception_to_status%' ]
-          tags:
-             - { name: monolog.logger, channel: app }
-```
-
-7. Install im-api-handler bundle
+3. Install im-api-handler bundle
 
 ```yaml
     composer config repositories.repo-name vcs https://github.immediate.co.uk/WCP-Packages/im-api-error-handler.git
     composer require immediate/im-api-error-handler
 ```
-8. Check the API's 'config/bundles.php' for the content below
+4. Check the API's 'config/bundles.php' for the content below
 
 ```yaml
 
     IM\Fabric\Bundle\API\Error\Subscriber\ApiErrorHandlerBundle::class => ['all' => true],
 
 ```
-9. If it is not present then add it
-
-
-
+5. If it is not present then add it

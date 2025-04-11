@@ -22,7 +22,7 @@
     },
     "require": {
         "php": "^8.1",
-        "api-platform/core": "^3.2",
+        "api-platform/core": "^4.1",
         "symfony/http-kernel": "^6.4",
         "psr/log": "^3",
         "symfony/monolog-bundle": "^3.10"

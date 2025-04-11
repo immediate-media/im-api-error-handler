@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace IM\Fabric\Bundle\ApiErrorHandlerBundle\EventSubscriber;
 
-use ApiPlatform\Exception\ExceptionInterface as ApiPlatformException;
+use ApiPlatform\Metadata\Exception\ExceptionInterface as ApiPlatformException;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 use Symfony\Component\HttpFoundation\Response;

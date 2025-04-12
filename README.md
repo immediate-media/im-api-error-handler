@@ -14,7 +14,7 @@ To use this bundle with Monolog, follow these steps:
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.immediate.co.uk/WCP-Packages/im-api-error-handler.git"
+            "url": "https://github.com/immediate-media/im-api-error-handler.git"
         }
     ]
 }

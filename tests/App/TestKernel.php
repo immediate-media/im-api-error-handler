@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace IM\Fabric\Bundle\APIErrorHandlerBundle\Tests\App;
 
 use IM\Fabric\Bundle\ApiErrorHandlerBundle\ApiErrorHandlerBundle;
+use Override;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\HttpKernel\Kernel;
@@ -35,6 +36,7 @@ class TestKernel extends Kernel
         $loader->load($this->getProjectDir() . '/Tests/App/config/config.yaml');
     }
 
+    #[Override]
     public function getCacheDir(): string
     {
         return __DIR__ . '/../cache/' . spl_object_hash($this);

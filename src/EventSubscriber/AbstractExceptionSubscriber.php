@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace IM\Fabric\Bundle\APIErrorHandlerBundle\EventSubscriber;
+namespace IM\Fabric\Bundle\ApiErrorHandlerBundle\EventSubscriber;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Response;

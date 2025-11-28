@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace IM\Fabric\Bundle\APIErrorHandlerBundle\Tests\App;
+namespace IM\Fabric\Bundle\ApiErrorHandlerBundle\Tests\App;
 
 use IM\Fabric\Bundle\ApiErrorHandlerBundle\ApiErrorHandlerBundle;
 use Override;

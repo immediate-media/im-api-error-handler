@@ -35,7 +35,7 @@ abstract class AbstractExceptionSubscriber implements EventSubscriberInterface
     /**
      * @SuppressWarnings(PHPMD.UndefinedVariable)
      */
-    protected function toArray(Throwable $throwable, int $statusCode, string $appEnv = null): array
+    protected function toArray(Throwable $throwable, int $statusCode, ?string $appEnv = null): array
     {
         $response = new Response();
 
@@ -45,7 +45,7 @@ abstract class AbstractExceptionSubscriber implements EventSubscriberInterface
             'title' => $response::$statusTexts[$statusCode] ?? 'Unknown status code',
         ];
 
-        $appEnv = $appEnv ?? $this->appEnv;
+        $appEnv ??= $this->appEnv;
 
         if ($appEnv !== 'prod') {
             $data['trace'] = $this->generateTrace($throwable->getTrace());

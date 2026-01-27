@@ -46,17 +46,14 @@ class ErrorDisplayHandlerTest extends TestCase
     {
         $exception = new InvalidArgumentException('bad request');
         $statusCode = 400;
-        $subscriber = new ErrorDisplayHandler('dev', [get_class($exception) => $statusCode]);
+        $subscriber = new ErrorDisplayHandler('dev', [$exception::class => $statusCode]);
         $event = $this->buildMockEvent($exception);
 
         $event->expects('setResponse')->with(
             Mockery::on(
-                function ($response) use ($exception, $statusCode) {
-                    return
-                        $response instanceof JsonResponse &&
-                        $response->headers->get('Content-Type') === 'application/problem+json' &&
-                        $response->getStatusCode() === $statusCode;
-                }
+                fn($response) => $response instanceof JsonResponse &&
+                $response->headers->get('Content-Type') === 'application/problem+json' &&
+                $response->getStatusCode() === $statusCode
             )
         );
 
@@ -72,7 +69,7 @@ class ErrorDisplayHandlerTest extends TestCase
         $event->expects('setResponse')->with(
             Mockery::on(
                 function ($response) use ($exception) {
-                    $content = json_decode($response->getContent(), true);
+                    $content = json_decode((string) $response->getContent(), true);
                     return
                         $response instanceof JsonResponse &&
                         $response->headers->get('Content-Type') === 'application/problem+json' &&
@@ -96,7 +93,7 @@ class ErrorDisplayHandlerTest extends TestCase
         $event->expects('setResponse')->with(
             Mockery::on(
                 function ($response) use ($exception) {
-                    $content = json_decode($response->getContent(), true);
+                    $content = json_decode((string) $response->getContent(), true);
                     return
                         $response instanceof JsonResponse &&
                         $response->headers->get('Content-Type') === 'application/problem+json' &&
@@ -120,7 +117,7 @@ class ErrorDisplayHandlerTest extends TestCase
         $event->expects('setResponse')->with(
             Mockery::on(
                 function ($response) use ($exception) {
-                    $content = json_decode($response->getContent(), true);
+                    $content = json_decode((string) $response->getContent(), true);
                     return
                         $response instanceof JsonResponse &&
                         $response->headers->get('Content-Type') === 'application/problem+json' &&

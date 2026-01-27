@@ -35,6 +35,7 @@ class TestKernel extends Kernel
         $loader->load($this->getProjectDir() . '/Tests/App/config/config.yaml');
     }
 
+    #[\Override]
     public function getCacheDir(): string
     {
         return __DIR__ . '/../cache/' . spl_object_hash($this);

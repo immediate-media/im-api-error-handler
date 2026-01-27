@@ -51,7 +51,7 @@ class ErrorDisplayHandlerTest extends TestCase
 
         $event->expects('setResponse')->with(
             Mockery::on(
-                fn($response) => $response instanceof JsonResponse &&
+                fn($response): bool => $response instanceof JsonResponse &&
                 $response->headers->get('Content-Type') === 'application/problem+json' &&
                 $response->getStatusCode() === $statusCode
             )
